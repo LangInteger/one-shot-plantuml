@@ -34,9 +34,18 @@ async function getUrl() {
         await page.waitForSelector('body > div.position-relative.js-header-wrapper > header > div.Header-item.mr-0.mr-md-3.flex-order-1.flex-md-order-none > notification-indicator > a > svg', {visible: true, timeout: 10000 });
         console.log("Step 2 logined");
     
-        // search
-        await page.goto("https://github.com/search?l=&o=desc&p=" + between(1, 100) + "&q=language%3APlantUML&s=indexed&type=Code");
-        await page.waitForSelector('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', {visible: true, timeout: 15000 });
+        // search puml file with random page
+        // sometimes this page is rendered without result list, retry should be set
+        const randomUrl = "https://github.com/search?l=&o=desc&p=" + between(1, 100) + "&q=language%3APlantUML&s=indexed&type=Code";
+        try {
+            await page.goto(randomUrl);
+            await page.waitForSelector('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', {visible: true, timeout: 5000 });
+        } catch (e) {
+            console.log("search page go wrong without result list, try again");
+            await page.goto(randomUrl);
+            await page.waitForSelector('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', {visible: true, timeout: 5000 });
+        }
+        
         await page.$eval('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', el => el.click());
         await page.waitForSelector('#raw-url', {visible: true, timeout: 10000 })
         githubUrl = page.url();
