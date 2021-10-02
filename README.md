@@ -23,7 +23,7 @@ Thanks to:
 - make some changes and deploy again
   - `git add .`
   - `git commit -m "xxx"`
-  - `git push heroku master`
+  - `git push heroku main`
 
 For local test, use `heroku local web`.
 
