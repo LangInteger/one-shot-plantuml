@@ -37,16 +37,17 @@ async function getUrl() {
         // search puml file with random page
         // sometimes this page is rendered without result list, retry should be set
         const randomUrl = "https://github.com/search?l=&o=desc&p=" + between(1, 100) + "&q=language%3APlantUML&s=indexed&type=Code";
+        const fileItemSelector = "#code_search_results > div.code-list > div:nth-child(" + between(1, 10) + ") > div > div.f4.text-normal > a";
         try {
             await page.goto(randomUrl);
-            await page.waitForSelector('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', {visible: true, timeout: 5000 });
+            await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
         } catch (e) {
             console.log("search page go wrong without result list, try again");
             await page.goto(randomUrl);
-            await page.waitForSelector('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', {visible: true, timeout: 5000 });
+            await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
         }
         
-        await page.$eval('#code_search_results > div.code-list > div:nth-child(1) > div > div.f4.text-normal > a', el => el.click());
+        await page.$eval(fileItemSelector, el => el.click());
         await page.waitForSelector('#raw-url', {visible: true, timeout: 10000 })
         githubUrl = page.url();
         await page.$eval('#raw-url', el => el.click());
