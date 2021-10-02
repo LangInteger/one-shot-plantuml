@@ -8,6 +8,24 @@ Thanks to:
 - [puppeteer-heroku-buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack)
 - [real-world-plantuml](https://github.com/yfuruyama/real-world-plantuml)
 
+### Usage
+
+- clone the repo `git clone git@github.com:LangInteger/one-shot-plantuml.git`
+- walk into the directory `cd one-shot-plantuml`
+- make sure [heroku cli](https://devcenter.heroku.com/articles/heroku-cli) is installed and logined
+- create your app `heroku create your-app-name`
+- add buildpacks as infrastructure
+  - node.js as application entry `heroku buildpacks:set heroku/nodejs`
+  - puppeteer-heroku-buildpack add extra dependencies for puppeteer `heroku buildpacks:add --index 1 https://github.com/jontewks/puppeteer-heroku-buildpack`
+- deploy to remote `git push heroku master`
+- check application logs `heroku logs --tail`
+- make some changes and deploy again
+  - `git add .`
+  - `git commit -m "xxx"`
+  - `git push heroku master`
+  
+For local test, use `heroku local web`.
+
 ### Troubleshooting
 
 #### 1 Github API Support is Limited
