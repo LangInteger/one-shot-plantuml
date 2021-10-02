@@ -17,7 +17,7 @@ Thanks to:
 - add buildpacks as infrastructure
   - node.js as application entry `heroku buildpacks:set heroku/nodejs`
   - puppeteer-heroku-buildpack add extra dependencies for puppeteer `heroku buildpacks:add --index 1 https://github.com/jontewks/puppeteer-heroku-buildpack`
-- deploy to remote `git push heroku master`
+- deploy to remote `git push heroku main`
 - add env variables `GITHUB_USERNAME` and `GITHUB_PASSWORD` on your application settings dashboard
 - check application logs `heroku logs --tail`
 - make some changes and deploy again
