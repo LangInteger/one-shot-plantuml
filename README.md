@@ -8,7 +8,7 @@ Thanks to:
 - [puppeteer-heroku-buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack)
 - [real-world-plantuml](https://github.com/yfuruyama/real-world-plantuml)
 
-### Usage
+### Deploy
 
 - clone the repo `git clone git@github.com:LangInteger/one-shot-plantuml.git`
 - walk into the directory `cd one-shot-plantuml`
@@ -26,6 +26,10 @@ Thanks to:
   - `git push heroku master`
 
 For local test, use `heroku local web`.
+
+### Usage
+
+![Demo, if cannot see, please check your network](https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/demo.gif)
 
 ### Troubleshooting
 
