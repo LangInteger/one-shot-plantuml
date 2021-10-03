@@ -27,9 +27,13 @@ Thanks to:
 
 For local test, use `heroku local web`.
 
-### Usage
+### Architecture & Usage
 
-![Demo, if cannot see, please check your network](https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/demo.gif)
+![Architecture, if cannot see, please check your network](https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/one-shot-plantuml-architecture.png)
+
+![Demo1, if cannot see, please check your network](https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/osp-demo1.gif)
+
+![Demo2, if cannot see, please check your network](https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/osp-demo2.gif)
 
 ### Troubleshooting
 
