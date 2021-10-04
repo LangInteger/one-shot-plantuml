@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+package "Notice" {
+  [Sorry my friend,\nThe website is temporarily down.\nYou may try again later or contact the maintainer to fix it.\nBest regards,\nLang]
+}
+
+@enduml
