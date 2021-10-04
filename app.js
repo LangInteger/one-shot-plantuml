@@ -22,48 +22,53 @@ function between(min, max) {
 
 // Get random puml file address (github raw usercontent) recently edited in github
 async function getUrl() {
-    // use existed browser
-    const page = await browser.newPage();
-    console.log("Step 1 page opened");
-    let githubUrl = null;
-    let rawContentUrl = null;
-
     try {
-        // must guarantee that already logined
-        await page.goto("https://github.com");
-        await page.waitForSelector('body > div.position-relative.js-header-wrapper > header > div.Header-item.mr-0.mr-md-3.flex-order-1.flex-md-order-none > notification-indicator > a > svg', {visible: true, timeout: 10000 });
-        console.log("Step 2 logined");
+        // use existed browser
+        const page = await browser.newPage();
+        console.log("Step 1 page opened");
+        let githubUrl = null;
+        let rawContentUrl = null;
     
-        // search puml file with random page
-        // sometimes this page is rendered without result list, retry should be set
-        const randomUrl = "https://github.com/search?l=&o=desc&p=" + between(1, 100) + "&q=language%3APlantUML&s=indexed&type=Code";
-        const fileItemSelector = "#code_search_results > div.code-list > div:nth-child(" + between(1, 10) + ") > div > div.f4.text-normal > a";
         try {
-            await page.goto(randomUrl);
-            await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
-        } catch (e) {
-            console.log("search page go wrong without result list, try again");
-            await page.goto(randomUrl);
-            await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
-        }
+            // must guarantee that already logined
+            await page.goto("https://github.com");
+            await page.waitForSelector('body > div.position-relative.js-header-wrapper > header > div.Header-item.mr-0.mr-md-3.flex-order-1.flex-md-order-none > notification-indicator > a > svg', {visible: true, timeout: 10000 });
+            console.log("Step 2 logined");
         
-        await page.$eval(fileItemSelector, el => el.click());
-        await page.waitForSelector('#raw-url', {visible: true, timeout: 10000 })
-        githubUrl = page.url();
-        await page.$eval('#raw-url', el => el.click());
-        rawContentUrl = page.url();
-        console.log("Step 3 searched");
+            // search puml file with random page
+            // sometimes this page is rendered without result list, retry should be set
+            const randomUrl = "https://github.com/search?l=&o=desc&p=" + between(1, 100) + "&q=language%3APlantUML&s=indexed&type=Code";
+            const fileItemSelector = "#code_search_results > div.code-list > div:nth-child(" + between(1, 10) + ") > div > div.f4.text-normal > a";
+            try {
+                await page.goto(randomUrl);
+                await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
+            } catch (e) {
+                console.log("search page go wrong without result list, try again");
+                await page.goto(randomUrl);
+                await page.waitForSelector(fileItemSelector, {visible: true, timeout: 5000 });
+            }
+            
+            await page.$eval(fileItemSelector, el => el.click());
+            await page.waitForSelector('#raw-url', {visible: true, timeout: 10000 })
+            githubUrl = page.url();
+            await page.$eval('#raw-url', el => el.click());
+            rawContentUrl = page.url();
+            console.log("Step 3 searched");
+        } catch (e) {
+            console.log("cur url: ", page.url());
+            console.log("exception: " + e);
+            throw e;
+        } finally {
+          await page.close();
+          console.log("Step 4 closed");
+        }
+        return [true, githubUrl, rawContentUrl];
     } catch (e) {
-        console.log("cur url: ", page.url());
         console.log("exception: " + e);
         return [false, 
             "https://github.com/LangInteger/one-shot-plantuml/blob/main/docs/500.puml", 
             "https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/500.puml"];
-    } finally {
-      await page.close();
-      console.log("Step 4 closed");
     }
-    return [true, githubUrl, rawContentUrl];
 }
 
 app.get('/getUrl', async function(req, res) {
