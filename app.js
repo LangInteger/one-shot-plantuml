@@ -56,12 +56,14 @@ async function getUrl() {
     } catch (e) {
         console.log("cur url: ", page.url());
         console.log("exception: " + e);
-        return "error";
+        return [false, 
+            "https://github.com/LangInteger/one-shot-plantuml/blob/main/docs/500.puml", 
+            "https://raw.githubusercontent.com/LangInteger/one-shot-plantuml/main/docs/500.puml"];
     } finally {
       await page.close();
       console.log("Step 4 closed");
     }
-    return [githubUrl, rawContentUrl];
+    return [true, githubUrl, rawContentUrl];
 }
 
 app.get('/getUrl', async function(req, res) {
@@ -72,7 +74,7 @@ app.get('/getUrl', async function(req, res) {
 app.get('/', async function(req, res) {
     let ret = await getUrl();
     console.log("url: " + ret);
-    res.render('index', {url: ret[1], githubUrl: ret[0]});
+    res.render('index', {url: ret[1], githubUrl: ret[2]});
 });
 
 // only login, and consider verification code
