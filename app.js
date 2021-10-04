@@ -74,7 +74,7 @@ app.get('/getUrl', async function(req, res) {
 app.get('/', async function(req, res) {
     let ret = await getUrl();
     console.log("url: " + ret);
-    res.render('index', {url: ret[1], githubUrl: ret[2]});
+    res.render('index', {url: ret[2], githubUrl: ret[1]});
 });
 
 // only login, and consider verification code
