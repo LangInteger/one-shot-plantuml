@@ -3,7 +3,7 @@ name: helth-detector
 on:
  push:
   branches:
-     - master
+     - main
 #  schedule:
 #    - cron: "0 1,3,7 * * *" # 北京时间每日9点，11点和15点
 jobs:
