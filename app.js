@@ -142,12 +142,12 @@ app.get('/login', async function(req, res) {
     } catch (e) {
         console.log("cur url: ", page.url());
         console.log("exception: " + e);
-        return "error";
+        throw e;
     } finally {
       await page.close();
       console.log("Step 3 page closed");
     }
-    return 'success';
+    res.send("login success");
 });
 
 // for save verificate code temporarily
