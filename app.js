@@ -12,6 +12,7 @@ const validUrl = require('valid-url');
 const path = require('path');
 
 var browser = null;
+var firstLogin = true;
 
 // generate random number
 function between(min, max) {  
@@ -89,6 +90,9 @@ app.get('/login', async function(req, res) {
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--user-agent=Mozilla/5.0 (Windows NT 10.0; WOW 64; Trident/7.0; rv:11.0) like Gecko']
             // headless: false
         });
+    } else {
+        // browser once created, so it is not first login
+        firstLogin = false;
     }
     
     const page = await browser.newPage();
@@ -142,7 +146,12 @@ app.get('/login', async function(req, res) {
     } catch (e) {
         console.log("cur url: ", page.url());
         console.log("exception: " + e);
-        throw e;
+        if (firstLogin) {
+            console.log("first login and exception happenes in the process, return login exception");
+            throw e;
+        } else {
+            console.log("exception happen in not first login, maybe it has logined before, return login success");
+        }
     } finally {
       await page.close();
       console.log("Step 3 page closed");
