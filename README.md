@@ -51,7 +51,7 @@ Github released the [Device Verification feature](https://github.community/t/new
 
 Many have posted article that suggests [Disable / Remove Device Verification](https://github.community/t/disable-remove-email-device-verification-prompt-on-login-not-the-2fa/2333), but not got accepted yet and it seems that this feature will continue to work for a thousand years.
 
-#### 3 Heroku Dynos Like to Hibernate
+#### 3 Heroku Dynos tend to Hibernate
 
 Refer to [Heroku Doc](https://devcenter.heroku.com/articles/free-dyno-hours):
 
@@ -59,4 +59,4 @@ Refer to [Heroku Doc](https://devcenter.heroku.com/articles/free-dyno-hours):
 
 When sleep, the main process and browser process will both be terminated. Since Github relies on cookies to identify devices, it will ask for device verification the next time login recoverd from sleep, which is a disaster.
 
-Luckily there are some ways to stop dynos from hibernate easily, according to this [SO thread](https://stackoverflow.com/questions/5480337/easy-way-to-prevent-heroku-idling).
+Luckily there are some ways to stop dynos from hibernate easily, according to this [SO thread](https://stackoverflow.com/questions/5480337/easy-way-to-prevent-heroku-idling). This project is using github actions to make regular access to one-shot-plantuml every 20 minutes(but not guaranteed), and thus make the dyno keep active all the time.
