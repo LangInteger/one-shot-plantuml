@@ -1,4 +1,4 @@
-name: helth-detector
+name: health-detector
 
 on:
 # push:
