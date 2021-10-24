@@ -1,7 +1,7 @@
 name: helth-detector
 
 on:
- push:
+# push:
 #   branches:
 #      - main
  schedule:
