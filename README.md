@@ -60,3 +60,18 @@ Refer to [Heroku Doc](https://devcenter.heroku.com/articles/free-dyno-hours):
 When sleep, the main process and browser process will both be terminated. Since Github relies on cookies to identify devices, it will ask for device verification the next time login recoverd from sleep, which is a disaster.
 
 Luckily there are some ways to stop dynos from hibernate easily, according to this [SO thread](https://stackoverflow.com/questions/5480337/easy-way-to-prevent-heroku-idling). This project is using github actions to make regular access to one-shot-plantuml every 20 minutes(but not guaranteed), and thus make the dyno keep active all the time.
+
+#### 4 App Responds with No web processes running
+
+Some friends made feedback to me to complain this. With heroku buildpacks set properly, the problem should not happen. So I think it is a heroku bug, and can be resolved by running the buildpacks set process again with following commands:
+
+```shell
+heroku buildpacks:clear
+heroku buildpacks:set heroku/nodejs
+heroku buildpacks:add --index 1 https://github.com/jontewks/puppeteer-heroku-buildpack
+git commit --allow-empty -m "Adjust buildpacks on Heroku"
+git push heroku main
+```
+
+Theses do not have any difference to commands in the `Deploy` part, but it just makes the project work.
+
