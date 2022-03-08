@@ -23,4 +23,3 @@ jobs:
           python scripts/health_check.py $URL
         env:
           URL: ${{ secrets.ONE_SHOT_PLANTUML_HEALTH_ROBOT_TOKEN }}
-
