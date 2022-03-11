@@ -74,4 +74,3 @@ git push heroku main
 ```
 
 Theses do not have any difference to commands in the `Deploy` part, but it just makes the project work.
-
